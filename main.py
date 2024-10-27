@@ -14,7 +14,7 @@ checkbox_vars = [[BooleanVar() for _ in range(8)] for _ in range(5)]  # 5 column
 # Custom labels for checkboxes
 checkbox_labels = [
     ["Chrome", "Firefox", "Safari", "Edge", "Opera", "Brave", "Vivaldi", "Tor"],  # Browsers
-    ["VS Code", "Eclipse", "PyCharm", "Atom", "Sublime Text", "IntelliJ", "NetBeans", "Xcode"],  # Development
+    ["VS Code", "Eclipse", "PyCharm", "Atom", "Sublime Text", "IntelliJ", "NetBeans"],  # Development
     ["Photoshop", "GIMP", "Inkscape", "Canva", "Figma", "Sketch", "CorelDRAW", "Adobe XD"],  # Creativity
     ["Steam", "Epic Games", "Origin", "Battle.net", "Uplay", "GOG", "Xbox App", "Discord"],  # Gaming
     ["Notepad", "TextEdit", "Evernote", "OneNote", "Trello", "Slack", "Zoom", "Skype"]  # Other
