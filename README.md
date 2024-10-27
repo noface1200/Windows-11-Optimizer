@@ -2,4 +2,4 @@
 Windows 11 Optimisation/Debloat-Tool made with Python and Powershell code.
 
 # Support & Contribution
-Join (Discord)[https://discord.gg/txEqBsKTxd]
+Join https://discord.gg/txEqBsKTxd
