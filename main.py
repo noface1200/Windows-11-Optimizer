@@ -201,7 +201,7 @@ def create_tab4(tabs):
         ["Feature D1", "Feature D2", "Feature D3", "Feature D4", "Feature D5", "Feature D6", "Feature D7", "Feature D8"]
     ]
 
-
+ 
     # Create checkboxes for customization options
     for row in range(8):
         for col in range(4): 
