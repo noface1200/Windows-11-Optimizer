@@ -201,25 +201,26 @@ def create_tab4(tabs):
         ["Feature D1", "Feature D2", "Feature D3", "Feature D4", "Feature D5", "Feature D6", "Feature D7", "Feature D8"]
     ]
 
+
     # Create checkboxes for customization options
     for row in range(8):
-        for col in range(4):
+        for col in range(4): 
             checkbox = Checkbutton(
                 checkbox_table_frame,
                 text=options_tab4[col][row],
                 variable=checkbox_vars_tab4[col][row]
             )
             checkbox.grid(row=row + 1, column=col, padx=15, pady=5)
-
+ 
     # Function to print selected options
     def print_selected_options():
         """Print the states of selected customization options."""
         print("Selected Options:")
         for col in range(4):
             for row in range(8):
-                option_name = options_tab4[col][row]
+                option_name = options_tab4[col][row] 
                 is_checked = checkbox_vars_tab4[col][row].get()
-                print(f"{option_name} = {is_checked} ({'ticked' if is_checked else 'not ticked'})")
+                print(f"{option_name} = {is_checked} ({'ticked' if is_checked else 'not ticked'})") 
 
     Button(tabs[3], text="Print Selected Options and Enable Next Tab",
            command=lambda: [print_selected_options(), enable_next_tab(3)]).pack(pady=10)
@@ -249,4 +250,4 @@ if __name__ == "__main__":
 
     # Start the main event loop of the application
     window.mainloop()
-    
+
