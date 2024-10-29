@@ -1,5 +1,20 @@
 from tkinter import *
 from tkinter import ttk
+import pygame  # Import pygame for sound playback
+import os      # Import os for clearing the console
+
+# Function to clear the console
+def clear_console():
+    """Clear the console screen based on the operating system."""
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+# Function to play the startup sound
+def play_startup_sound():
+    """Play the startup sound when the application starts."""
+    pygame.mixer.init()  # Initialize the mixer
+    pygame.mixer.music.load("sound\startup_sound.mp3")  # Load the sound file
+    pygame.mixer.music.play()  # Play the sound
+    pygame.mixer.music.set_endevent(pygame.USEREVENT)  # Set an event when the sound ends
 
 # Create and configure the Notebook for tabs
 def create_notebook(window):
@@ -64,7 +79,6 @@ def navigate_tabs(direction):
 def update_button_visibility(notebook):
     """Update the visibility of navigation buttons based on the current tab."""
     current_index = notebook.index(notebook.select())
-    print(current_index)
     
     if current_index == 0:  # First tab
         back_button.pack_forget()  # Hide back button
@@ -88,6 +102,11 @@ def create_main_window():
 # Main execution flow
 if __name__ == "__main__":
     window = create_main_window()  # Initialize the main window
+    play_startup_sound()  # Play the startup sound
+
+    # Clear the console after the sound starts playing
+    clear_console()
+
     notebook, tabs = create_notebook(window)  # Create the notebook and tabs
 
     # Start the main event loop of the application
