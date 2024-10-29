@@ -12,9 +12,15 @@ def clear_console():
 def play_startup_sound():
     """Play the startup sound when the application starts."""
     pygame.mixer.init()  # Initialize the mixer
-    pygame.mixer.music.load("sounds\startup_sound.mp3")  # Load the sound file
+    pygame.mixer.music.load("sounds/startup_sound.mp3")  # Load the sound file
     pygame.mixer.music.play()  # Play the sound
     pygame.mixer.music.set_endevent(pygame.USEREVENT)  # Set an event when the sound ends
+
+# Function to play a click sound
+def play_click_sound():
+    """Play the click sound for button actions."""
+    pygame.mixer.music.load("sounds/click_movement_button.mp3")  # Load the click sound
+    pygame.mixer.music.play()  # Play the click sound
 
 # Create and configure the Notebook for tabs
 def create_notebook(window):
@@ -64,7 +70,8 @@ def add_navigation_buttons(window):
     return back_button, forward_button
 
 def navigate_tabs(direction):
-    """Navigate to the next or previous tab."""
+    """Navigate to the next or previous tab and play sound."""
+    play_click_sound()  # Play the click sound
     current_index = notebook.index(notebook.select())
     new_index = current_index + direction
     if 0 <= new_index < len(notebook.tabs()):
