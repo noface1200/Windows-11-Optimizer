@@ -12,7 +12,7 @@ def clear_console():
 def play_startup_sound():
     """Play the startup sound when the application starts."""
     pygame.mixer.init()  # Initialize the mixer
-    pygame.mixer.music.load("sound\startup_sound.mp3")  # Load the sound file
+    pygame.mixer.music.load("sounds\startup_sound.mp3")  # Load the sound file
     pygame.mixer.music.play()  # Play the sound
     pygame.mixer.music.set_endevent(pygame.USEREVENT)  # Set an event when the sound ends
 
@@ -97,6 +97,7 @@ def create_main_window():
     window.title("Windows 11 Optimizer")  # Set the window title
     window.geometry("1000x650")  # Set the window size to 1000x650
     window.resizable(False, False)  # Make the window non-resizable
+    window.iconbitmap("images/cookie.ico")  # Set the window icon
     return window
 
 # Main execution flow
