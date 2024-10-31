@@ -1,3 +1,6 @@
+The program is not yet ready for usage! Still in developement!
+
+
 # Windows 11 Optimizer
 
 This project focuses on enhancing the performance of Windows systems by automating the removal of bloatware—unwanted pre-installed applications that consume resources. Using Python and Powershell, the script will identify and uninstall these applications, freeing up system resources and improving overall responsiveness.
