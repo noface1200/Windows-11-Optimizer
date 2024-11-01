@@ -18,7 +18,7 @@ Git:
 git clone https://github.com/TheEinzzCookie/Windows-11-Optimizer.git
 cd Windows-11-Optimizer/
 git pull https://github.com/TheEinzzCookie/Windows-11-Optimizer.git master
-python3 setup.py
+pip install -r requirements.txt
 ```
 
 Run the project using your own Ide or command line:
