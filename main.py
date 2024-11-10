@@ -1,9 +1,9 @@
 import customtkinter as ctk
 import sys
-import subprocess
 import pkg_resources
 import tkinter as tk
 from PIL import Image, ImageTk  # Import Pillow modules for image handling
+from api import optimisations, personalisations  # Import the lists from api.py
 
 class CustomApp(ctk.CTk):
     def __init__(self):
@@ -45,25 +45,25 @@ class CustomApp(ctk.CTk):
         personalisation_label = ctk.CTkLabel(self.personalisation_tab, text="Settings", font=("Helvetica", 14))
         personalisation_label.pack(pady=20)
 
-        self.python_section_tab = self.tabview.add("Python Info")
-        
-        self.python_info_label = ctk.CTkLabel(self.python_section_tab, text=f"Python {sys.version}", font=("Helvetica", 12))
-        self.python_info_label.pack(pady=10)
+        # For Optimisations tab - dynamically create buttons
+        self.optimisation_buttons = []
+        for func in optimisations:
+            button = ctk.CTkButton(self.optimizations_tab, text=func.__name__.replace("_", " ").title(), command=func)
+            button.pack(pady=5)
+            self.optimisation_buttons.append(button)
 
-        self.package_listbox = ctk.CTkTextbox(self.python_section_tab, height=480, width=620)
-        self.package_listbox.pack(pady=10, padx=10)
-        self.show_installed_packages()
+        # For Personalisation tab - dynamically create buttons
+        self.personalisation_buttons = []
+        for func in personalisations:
+            button = ctk.CTkButton(self.personalisation_tab, text=func.__name__.replace("_", " ").title(), command=func)
+            button.pack(pady=5)
+            self.personalisation_buttons.append(button)
 
         self._dragging = False
         self._offset_x = 0
         self._offset_y = 0
         self.appbar.bind("<Button-1>", self.start_drag)
         self.appbar.bind("<B1-Motion>", self.do_drag)
-
-    def show_installed_packages(self):
-        installed_packages = pkg_resources.working_set
-        for package in installed_packages:
-            self.package_listbox.insert("end", f"{package.key}=={package.version}\n")
 
     def start_drag(self, event):
         self._dragging = True
