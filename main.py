@@ -1,121 +1,78 @@
-from tkinter import *
-from tkinter import ttk
-import pygame  # Import pygame for sound playback
-import os      # Import os for clearing the console
+import customtkinter as ctk
+import sys
+import subprocess
+import pkg_resources
+import tkinter as tk
 
-# Function to clear the console
-def clear_console():
-    """Clear the console screen based on the operating system."""
-    os.system('cls' if os.name == 'nt' else 'clear')
+class CustomApp(ctk.CTk):
+    def __init__(self):
+        super().__init__()
+        self.title("Windows-11-Optimizer")
+        self.geometry("800x500")
 
-# Function to play the startup sound
-def play_startup_sound():
-    """Play the startup sound when the application starts."""
-    pygame.mixer.init()  # Initialize the mixer
-    pygame.mixer.music.load("sounds/startup_sound.mp3")  # Load the sound file
-    pygame.mixer.music.play()  # Play the sound
-    pygame.mixer.music.set_endevent(pygame.USEREVENT)  # Set an event when the sound ends
+        self.overrideredirect(True)
 
-# Function to play a click sound
-def play_click_sound():
-    """Play the click sound for button actions."""
-    pygame.mixer.music.load("sounds/click_movement_button.mp3")  # Load the click sound
-    pygame.mixer.music.play()  # Play the click sound
+        self.iconbitmap("images/cookie.ico")
 
-# Create and configure the Notebook for tabs
-def create_notebook(window):
-    """Create a Notebook widget to hold multiple tabs."""
-    notebook = ttk.Notebook(window)
-    tabs = [Frame(notebook) for _ in range(3)]  # Create 3 tabs
-    notebook.add(tabs[0], text="Setup & Requirements")  # First tab name
-    notebook.add(tabs[1], text="Optimisation")           # Second tab name
-    notebook.add(tabs[2], text="Finish")                 # Third tab name
-    notebook.pack(expand=True, fill="both")  # Pack the notebook
+        self.appbar = ctk.CTkFrame(self, height=40, fg_color="#2e3b4e")
+        self.appbar.pack(fill="x", side="top", anchor="n")
+        
+        self.appbar_label = ctk.CTkLabel(self.appbar, text="Windows-11-Optimizer", fg_color="#2e3b4e", font=("Helvetica", 16), text_color="white")
+        self.appbar_label.pack(pady=5, padx=20, side="left")
+        
+        self.close_button = ctk.CTkButton(self.appbar, text="X", command=self.quit, fg_color="#2e3b4e", text_color="white", width=40, height=40, corner_radius=10)
+        self.close_button.pack(pady=5, padx=10, side="right")
 
-    # Add navigation buttons (outside the tabs)
-    global back_button, forward_button
-    back_button, forward_button = add_navigation_buttons(window)
+        self.tabview = ctk.CTkTabview(self)
+        self.tabview.pack(expand=1, fill="both", padx=10, pady=10)
 
-    # Initially lock all tabs except the first
-    lock_tabs(notebook)
-    update_button_visibility(notebook)
+        self.setup_tab = self.tabview.add("Setup")
+        self.optimizations_tab = self.tabview.add("Optimisations")
+        self.personalisation_tab = self.tabview.add("Personalisation")
 
-    # Bind tab change event
-    notebook.bind("<<NotebookTabChanged>>", lambda e: update_button_visibility(notebook))
+        setup_label = ctk.CTkLabel(self.setup_tab, text="Welcome to Setup", font=("Helvetica", 14))
+        setup_label.pack(pady=20)
 
-    return notebook, tabs
+        optimizations_label = ctk.CTkLabel(self.optimizations_tab, text="Optimizer", font=("Helvetica", 14))
+        optimizations_label.pack(pady=20)
 
-def lock_tabs(notebook):
-    """Lock all tabs except the currently selected one."""
-    current_index = notebook.index(notebook.select())
-    for index in range(len(notebook.tabs())):
-        if index == current_index:
-            notebook.tab(index, state="normal")  # Unlock current tab
-        else:
-            notebook.tab(index, state="disabled")  # Lock other tabs
+        personalisation_label = ctk.CTkLabel(self.personalisation_tab, text="Settings", font=("Helvetica", 14))
+        personalisation_label.pack(pady=20)
 
-def add_navigation_buttons(window):
-    """Add forward and backward buttons to the main window."""
-    button_frame = Frame(window)  # Create a frame for buttons in the main window
-    button_frame.pack(side=BOTTOM, pady=10)
+        self.python_section_tab = self.tabview.add("Python Info")
+        
+        self.python_info_label = ctk.CTkLabel(self.python_section_tab, text=f"Python {sys.version}", font=("Helvetica", 12))
+        self.python_info_label.pack(pady=10)
 
-    # Create navigation buttons
-    back_button = Button(button_frame, text="Back", command=lambda: navigate_tabs(-1))
-    forward_button = Button(button_frame, text="Forward", command=lambda: navigate_tabs(1))
+        self.package_listbox = ctk.CTkTextbox(self.python_section_tab, height=480, width=620)
+        self.package_listbox.pack(pady=10, padx=10)
+        self.show_installed_packages()
 
-    # Place buttons in the frame
-    back_button.pack(side=LEFT, padx=5)
-    forward_button.pack(side=RIGHT, padx=5)
+        self._dragging = False
+        self._offset_x = 0
+        self._offset_y = 0
+        self.appbar.bind("<Button-1>", self.start_drag)
+        self.appbar.bind("<B1-Motion>", self.do_drag)
 
-    return back_button, forward_button
+    def show_installed_packages(self):
+        installed_packages = pkg_resources.working_set
+        for package in installed_packages:
+            self.package_listbox.insert("end", f"{package.key}=={package.version}\n")
 
-def navigate_tabs(direction):
-    """Navigate to the next or previous tab and play sound."""
-    play_click_sound()  # Play the click sound
-    current_index = notebook.index(notebook.select())
-    new_index = current_index + direction
-    if 0 <= new_index < len(notebook.tabs()):
-        # Unlock the new tab before moving
-        notebook.tab(new_index, state="normal")  # Unlock the next or previous tab
-        notebook.select(new_index)                # Move to the new tab
-        lock_tabs(notebook)                       # Lock all other tabs
-        update_button_visibility(notebook)        # Update button visibility
-    else:
-        print("Error: Cannot navigate further in that direction.")
+    def start_drag(self, event):
+        self._dragging = True
+        self._offset_x = event.x
+        self._offset_y = event.y
 
-def update_button_visibility(notebook):
-    """Update the visibility of navigation buttons based on the current tab."""
-    current_index = notebook.index(notebook.select())
-    
-    if current_index == 0:  # First tab
-        back_button.pack_forget()  # Hide back button
-    else:
-        back_button.pack(side=LEFT, padx=5)  # Show back button
+    def do_drag(self, event):
+        if self._dragging:
+            x = self.winfo_x() - self._offset_x + event.x
+            y = self.winfo_y() - self._offset_y + event.y
+            self.geometry(f"+{x}+{y}")
 
-    if current_index == len(notebook.tabs()) - 1:  # Last tab
-        forward_button.pack_forget()  # Hide forward button
-    else:
-        forward_button.pack(side=RIGHT, padx=5)  # Show forward button
+    def stop_drag(self, event):
+        self._dragging = False
 
-# Create the main application window
-def create_main_window():
-    """Initialize the main window for the application."""
-    window = Tk()
-    window.title("Windows 11 Optimizer")  # Set the window title
-    window.geometry("1000x650")  # Set the window size to 1000x650
-    window.resizable(False, False)  # Make the window non-resizable
-    window.iconbitmap("images/cookie.ico")  # Set the window icon
-    return window
 
-# Main execution flow
-if __name__ == "__main__":
-    window = create_main_window()  # Initialize the main window
-    play_startup_sound()  # Play the startup sound
-
-    # Clear the console after the sound starts playing
-    clear_console()
-
-    notebook, tabs = create_notebook(window)  # Create the notebook and tabs
-
-    # Start the main event loop of the application
-    window.mainloop()
+app = CustomApp()
+app.mainloop()
