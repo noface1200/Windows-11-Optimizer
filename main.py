@@ -3,6 +3,7 @@ import sys
 import subprocess
 import pkg_resources
 import tkinter as tk
+from PIL import Image, ImageTk  # Import Pillow modules for image handling
 
 class CustomApp(ctk.CTk):
     def __init__(self):
@@ -16,10 +17,15 @@ class CustomApp(ctk.CTk):
 
         self.appbar = ctk.CTkFrame(self, height=40, fg_color="#2e3b4e")
         self.appbar.pack(fill="x", side="top", anchor="n")
-        
-        self.appbar_label = ctk.CTkLabel(self.appbar, text="Windows-11-Optimizer", fg_color="#2e3b4e", font=("Helvetica", 16), text_color="white")
+
+        # Load the icon image using Pillow
+        appbar_icon_image = Image.open("images/cookie.ico")
+        appbar_icon_image = appbar_icon_image.resize((20, 20))  # Resize the image to fit the label
+        self.appbar_icon = ctk.CTkImage(appbar_icon_image)
+
+        self.appbar_label = ctk.CTkLabel(self.appbar, text="Windows-11-Optimizer", fg_color="#2e3b4e", font=("Helvetica", 16), text_color="white", image=self.appbar_icon, compound="left")
         self.appbar_label.pack(pady=5, padx=20, side="left")
-        
+
         self.close_button = ctk.CTkButton(self.appbar, text="X", command=self.quit, fg_color="#2e3b4e", text_color="white", width=40, height=40, corner_radius=10)
         self.close_button.pack(pady=5, padx=10, side="right")
 
