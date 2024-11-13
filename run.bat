@@ -12,9 +12,6 @@ if exist config\session.txt (
  @echo off
  CLS
  ECHO.
- ECHO =============================
- ECHO Running Admin shell
- ECHO =============================
 
 :init
  setlocal DisableDelayedExpansion
@@ -38,9 +35,6 @@ if exist config\session.txt (
 :getPrivileges
   if '%1'=='ELEV' (echo ELEV & shift /1 & goto gotPrivileges)
   ECHO.
-  ECHO **************************************
-  ECHO Invoking UAC for Privilege Escalation
-  ECHO **************************************
 
   ECHO Set UAC = CreateObject^("Shell.Application"^) > "%vbsGetPrivileges%"
   ECHO args = "ELEV " >> "%vbsGetPrivileges%"
