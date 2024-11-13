@@ -12,30 +12,24 @@ This project focuses on enhancing the performance of Windows systems by automati
 
 1. Install Python 3 from the offical website
 2. Install this project using git
+3. Note: The run.bat script automatically installs all the required libraries and modules, so you don’t need to set them up manually.
 
 Git:
 ```cmd
 git clone https://github.com/TheEinzzCookie/Windows-11-Optimizer.git
 cd Windows-11-Optimizer/
-git pull https://github.com/TheEinzzCookie/Windows-11-Optimizer.git master
-pip install -r requirements.txt
 ```
-
-Run the project using your own Ide or command line:
-```cmd
-python3 main.py
-```
-
 
 ## Usage/Examples
 
-Still in developement
-
+To Run The Program Use:
+```cmd
+run
+```
 
 ## Contributing
 
-Contributions are always welcome! Also feel free to join the [Discord Server](https://discord.gg/txEqBsKTxd) to talk about the developement.
-
+Contributions are always welcome! Also feel free to join the [Discord Server](https://providence-ho.neocities.org/discord/invite.html?id=dynamic-scripting-932920580989128754)
 See [contributing.md](https://github.com/TheEinzzCookie/Windows-11-Optimizer/blob/main/CONTRIBUTING.md) for ways to get started.
 
 
