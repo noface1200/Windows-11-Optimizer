@@ -29,7 +29,7 @@ run
 
 ## Contributing
 
-Contributions are always welcome! Also feel free to join the [Discord Server](https://providence-ho.neocities.org/discord/invite.html?id=dynamic-scripting-932920580989128754)
+Contributions are always welcome! Also feel free to join the [Discord Server](https://providence-ho.neocities.org/discord/invite?id=dynamic-scripting-932920580989128754)
 See [contributing.md](https://github.com/TheEinzzCookie/Windows-11-Optimizer/blob/main/CONTRIBUTING.md) for ways to get started.
 
 
