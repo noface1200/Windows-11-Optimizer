@@ -1,12 +1,23 @@
 # api.py
-
+import os, shutil
 # Define the optimisations functions
 def clear_cache():
-    """
-    Clears the system cache.
-    """
-    print("Cache cleared!")
-    # Add logic to clear cache (e.g., using subprocess or os commands)
+    temp_dir = os.getenv('TEMP')
+    try:
+        for filename in os.listdir(temp_dir):
+            file_path = os.path.join(temp_dir, filename)
+            try:
+                if os.path.isfile(file_path):
+                    os.remove(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except PermissionError:
+                print(f"Permission denied: {file_path}")
+            except OSError as e:
+                print(f"Error removing {file_path}: {e}")
+        print("Cache cleared!")
+    except Exception as e:
+        print(f"Failed to clear cache: {e}")
 
 def power_plan():
     """
